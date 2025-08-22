@@ -1,0 +1,566 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Base User model for authentication
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  emailVerified Boolean  @default(false)
+  password      String?  // For credentials auth
+  name          String?
+  avatar        String?
+  role          UserRole @default(JOB_SEEKER)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  lastLoginAt   DateTime?
+  
+  // GDPR fields
+  dataRetentionConsent  Boolean @default(false)
+  marketingConsent      Boolean @default(false)
+  jobAlertConsent       Boolean @default(false)
+  deletedAt             DateTime?
+  
+  // Relations
+  jobSeeker     JobSeeker?
+  employer      Employer?
+  consentLogs   ConsentLog[]
+  auditLogs     AuditLog[]
+  savedSearches  SavedSearch[]
+  recentSearches RecentSearch[]
+  
+  @@map("users")
+}
+
+enum UserRole {
+  JOB_SEEKER
+  EMPLOYER
+  ADMIN
+}
+
+// Job Seeker Profile
+model JobSeeker {
+  id          String @id @default(cuid())
+  userId      String @unique
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Personal Information
+  firstName   String
+  lastName    String
+  phone       String?
+  location    String
+  country     String @default("Cyprus")
+  bio         String?
+  
+  // Professional Information
+  title       String?
+  experience  Int?    // Years of experience
+  education   String?
+  
+  // CV Information
+  cvUrl       String?
+  cvFileName  String?
+  cvUploadedAt DateTime?
+  
+  // GDPR fields
+  profileVisibility ProfileVisibility @default(PUBLIC)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  skills      JobSeekerSkill[]
+  applications Application[]
+  jobAlerts   JobAlert[]
+  savedJobs   SavedJob[]
+  
+  @@map("job_seekers")
+}
+
+enum ProfileVisibility {
+  PUBLIC
+  PRIVATE
+  RECRUITERS_ONLY
+}
+
+// Employer Profile
+model Employer {
+  id          String @id @default(cuid())
+  userId      String @unique
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Company Information
+  companyName String
+  description String?
+  website     String?
+  industry    String?
+  size        CompanySize?
+  logo        String?
+  
+  // Contact Information
+  contactName String?
+  contactEmail String?
+  contactPhone String?
+  
+  // Address
+  address     String?
+  city        String?
+  postalCode  String?
+  country     String @default("Cyprus")
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  company     Company?
+  jobs        Job[]
+  payments    Payment[]
+  subscriptions Subscription[]
+  
+  @@map("employers")
+}
+
+enum CompanySize {
+  STARTUP
+  SMALL
+  MEDIUM
+  LARGE
+  ENTERPRISE
+}
+
+// Company Details
+model Company {
+  id          String @id @default(cuid())
+  employerId  String @unique
+  employer    Employer @relation(fields: [employerId], references: [id], onDelete: Cascade)
+  
+  description String?
+  mission     String?
+  values      String?
+  benefits    String?
+  
+  // Social Media
+  linkedin    String?
+  facebook    String?
+  twitter     String?
+  instagram   String?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("companies")
+}
+
+// Job Postings
+model Job {
+  id          String @id @default(cuid())
+  employerId  String
+  employer    Employer @relation(fields: [employerId], references: [id], onDelete: Cascade)
+  
+  // Job Details
+  title       String
+  description String
+  requirements String?
+  responsibilities String?
+  
+  // Location
+  location    String
+  remote      RemoteType @default(ONSITE)
+  country     String @default("Cyprus")
+  
+  // Employment Details
+  type        EmploymentType @default(FULL_TIME)
+  salaryMin   Int?     // In EUR
+  salaryMax   Int?     // In EUR
+  salaryCurrency String @default("EUR")
+  
+  // Application Settings
+  applicationEmail String?
+  applicationUrl   String?
+  
+  // Status
+  status      JobStatus @default(DRAFT)
+  featured    Boolean @default(false)
+  urgent      Boolean @default(false)
+  
+  // Dates
+  expiresAt   DateTime?
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  skills      JobSkill[]
+  applications Application[]
+  payments    Payment[]
+  savedJobs   SavedJob[]
+  
+  @@map("jobs")
+}
+
+enum RemoteType {
+  ONSITE
+  HYBRID
+  REMOTE
+}
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  FREELANCE
+}
+
+enum JobStatus {
+  DRAFT
+  PUBLISHED
+  EXPIRED
+  CLOSED
+  PAUSED
+}
+
+// Skills Database
+model Skill {
+  id          String @id @default(cuid())
+  name        String @unique
+  category    String?
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  jobSeekerSkills JobSeekerSkill[]
+  jobSkills      JobSkill[]
+  
+  @@map("skills")
+}
+
+// Job Seeker Skills (Many-to-Many)
+model JobSeekerSkill {
+  id          String @id @default(cuid())
+  jobSeekerId String
+  skillId     String
+  level       SkillLevel @default(BEGINNER)
+  
+  jobSeeker   JobSeeker @relation(fields: [jobSeekerId], references: [id], onDelete: Cascade)
+  skill       Skill     @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  
+  @@unique([jobSeekerId, skillId])
+  @@map("job_seeker_skills")
+}
+
+// Job Skills (Many-to-Many)
+model JobSkill {
+  id      String @id @default(cuid())
+  jobId   String
+  skillId String
+  
+  job     Job   @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  skill   Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  
+  @@unique([jobId, skillId])
+  @@map("job_skills")
+}
+
+enum SkillLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+  EXPERT
+}
+
+// Job Applications
+model Application {
+  id          String @id @default(cuid())
+  jobSeekerId String? // Optional for guest applications
+  jobId       String
+  
+  jobSeeker   JobSeeker? @relation(fields: [jobSeekerId], references: [id], onDelete: Cascade)
+  job         Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  
+  // Guest Application Fields
+  guestEmail  String?  // For guest applications
+  guestName   String?
+  guestPhone  String?
+  
+  // Application Details
+  coverLetter String?    // Text cover letter
+  coverLetterUrl String? // Uploaded cover letter file
+  cvUrl       String?    // Uploaded CV file
+  status      ApplicationStatus @default(APPLIED)
+  
+  // Timestamps
+  appliedAt   DateTime @default(now())
+  viewedAt    DateTime?
+  respondedAt DateTime?
+  
+  // Employer Notes
+  notes       String?
+  
+  @@unique([jobSeekerId, jobId])
+  @@unique([guestEmail, jobId]) // Prevent duplicate guest applications
+  @@map("applications")
+}
+
+// Saved Jobs
+model SavedJob {
+  id          String @id @default(cuid())
+  jobSeekerId String
+  jobId       String
+  
+  jobSeeker   JobSeeker @relation(fields: [jobSeekerId], references: [id], onDelete: Cascade)
+  job         Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime @default(now())
+  
+  @@unique([jobSeekerId, jobId])
+  @@map("saved_jobs")
+}
+
+enum ApplicationStatus {
+  APPLIED
+  VIEWED
+  SHORTLISTED
+  INTERVIEW
+  OFFERED
+  HIRED
+  REJECTED
+  WITHDRAWN
+}
+
+// Job Alerts
+model JobAlert {
+  id          String @id @default(cuid())
+  jobSeekerId String
+  jobSeeker   JobSeeker @relation(fields: [jobSeekerId], references: [id], onDelete: Cascade)
+  
+  // Alert Criteria
+  title       String?
+  location    String?
+  industry    String?
+  jobType     EmploymentType?
+  salaryMin   Int?
+  salaryMax   Int?
+  
+  // Notification Settings
+  emailAlerts Boolean @default(true)
+  smsAlerts   Boolean @default(false)
+  frequency   AlertFrequency @default(DAILY)
+  
+  // Status
+  active      Boolean @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("job_alerts")
+}
+
+enum AlertFrequency {
+  INSTANT
+  DAILY
+  WEEKLY
+}
+
+// Payments
+model Payment {
+  id          String @id @default(cuid())
+  employerId  String
+  employer    Employer @relation(fields: [employerId], references: [id], onDelete: Cascade)
+  jobId       String?
+  job         Job?      @relation(fields: [jobId], references: [id], onDelete: SetNull)
+  
+  // Payment Details
+  amount      Int       // In cents (EUR)
+  currency    String    @default("EUR")
+  status      PaymentStatus @default(PENDING)
+  
+  // Stripe Integration
+  stripePaymentIntentId String?
+  stripeCustomerId     String?
+  
+  // Payment Type
+  type        PaymentType
+  
+  // Subscription Info
+  subscriptionId String?
+  planType    SubscriptionPlan?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("payments")
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+enum PaymentType {
+  JOB_POSTING
+  SUBSCRIPTION
+  FEATURED_JOB
+  URGENT_JOB
+}
+
+enum SubscriptionPlan {
+  BASIC
+  PREMIUM
+}
+
+// Subscriptions
+model Subscription {
+  id          String @id @default(cuid())
+  employerId  String
+  employer    Employer @relation(fields: [employerId], references: [id], onDelete: Cascade)
+  
+  // Subscription Details
+  plan        SubscriptionPlan
+  status      SubscriptionStatus @default(ACTIVE)
+  
+  // Dates
+  startsAt    DateTime @default(now())
+  endsAt      DateTime
+  cancelledAt DateTime?
+  
+  // Stripe Integration
+  stripeSubscriptionId String?
+  stripeCustomerId     String?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("subscriptions")
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+  PENDING
+}
+
+// GDPR Consent Logs
+model ConsentLog {
+  id          String @id @default(cuid())
+  userId      String
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Consent Details
+  consentType ConsentType
+  action      ConsentAction  // GRANTED or REVOKED
+  ipAddress   String?
+  userAgent   String?
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("consent_logs")
+}
+
+enum ConsentType {
+  DATA_RETENTION
+  MARKETING
+  JOB_ALERTS
+  COOKIES
+  ANALYTICS
+}
+
+enum ConsentAction {
+  GRANTED
+  REVOKED
+}
+
+// GDPR Audit Logs
+model AuditLog {
+  id          String @id @default(cuid())
+  userId      String?
+  user        User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  // Action Details
+  action      String
+  entityType  String
+  entityId    String?
+  changes     String?  // JSON string of changes
+  
+  // Request Info
+  ipAddress   String?
+  userAgent   String?
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("audit_logs")
+}
+
+// Newsletter Subscribers
+model NewsletterSubscriber {
+  id            String @id @default(cuid())
+  email         String @unique
+  name          String?
+  preferences   String? // JSON string of preferences (e.g., '["jobs", "companies", "resources"]')
+  
+  // Subscription Status
+  active        Boolean @default(true)
+  subscribedAt  DateTime @default(now())
+  unsubscribedAt DateTime?
+  
+  // GDPR Compliance
+  dataRetentionConsent Boolean @default(false)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@map("newsletter_subscribers")
+}
+
+// Saved Searches
+model SavedSearch {
+  id            String @id @default(cuid())
+  userId        String
+  user          User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Search Details
+  name          String
+  query         String?
+  location      String?
+  filters       String  // JSON string of filters
+  
+  // Alert Settings
+  alertEnabled  Boolean @default(false)
+  alertFrequency AlertFrequency @default(DAILY)
+  
+  // Usage Tracking
+  lastUsed      DateTime?
+  jobCount      Int?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@map("saved_searches")
+}
+
+// Recent Searches
+model RecentSearch {
+  id            String @id @default(cuid())
+  userId        String
+  user          User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Search Details
+  query         String?
+  location      String?
+  filters       String? // JSON string of filters
+  
+  createdAt     DateTime @default(now())
+  
+  @@map("recent_searches")
+}

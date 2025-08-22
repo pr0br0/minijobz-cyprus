@@ -1,0 +1,333 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "filter": "Filter",
+    "apply": "Apply",
+    "view": "View",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "back": "Back",
+    "continue": "Continue",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "navigation": {
+    "home": "Home",
+    "jobs": "Browse Jobs",
+    "companies": "Companies",
+    "resources": "Resources",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "settings": "Settings",
+    "signOut": "Sign Out",
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+  "home": {
+    "hero": {
+      "title": "Find Your Dream Job in Cyprus",
+      "subtitle": "Connect with top employers across the island. GDPR-compliant, secure, and free for job seekers.",
+      "searchPlaceholder": "Job title, keywords, or company",
+      "locationPlaceholder": "Select location...",
+      "searchButton": "Search Jobs"
+    },
+    "stats": {
+      "activeJobSeekers": "Active Job Seekers",
+      "companiesHiring": "Companies Hiring",
+      "jobsPosted": "Jobs Posted",
+      "successRate": "Success Rate"
+    },
+    "features": {
+      "smartSearch": {
+        "title": "Smart Job Search",
+        "description": "Advanced filters and AI-powered recommendations to find your perfect job match."
+      },
+      "gdprCompliant": {
+        "title": "GDPR Compliant",
+        "description": "Your data is protected with EU privacy standards and full control over your information."
+      },
+      "transparentPricing": {
+        "title": "Transparent Pricing",
+        "description": "Clear pricing with no hidden fees. Pay-per-post or affordable subscription plans."
+      },
+      "instantApplications": {
+        "title": "Instant Applications",
+        "description": "Apply to jobs with one click and track your application status in real-time."
+      }
+    },
+    "featuredJobs": {
+      "title": "Featured Jobs",
+      "subtitle": "Discover the latest opportunities from top employers in Cyprus"
+    },
+    "newsletter": {
+      "title": "Stay Updated",
+      "subtitle": "Get the latest job alerts and career tips delivered to your inbox",
+      "emailPlaceholder": "Enter your email",
+      "namePlaceholder": "Enter your name",
+      "subscribeButton": "Subscribe",
+      "success": "Successfully subscribed! Check your email for confirmation.",
+      "error": "Subscription failed. Please try again."
+    }
+  },
+  "jobs": {
+    "search": {
+      "title": "Search Results",
+      "noResults": "No jobs found",
+      "noResultsDescription": "Try adjusting your search criteria or filters to find more opportunities.",
+      "clearFilters": "Clear All Filters",
+      "filtersApplied": "filter applied",
+      "filtersApplied_plural": "filters applied",
+      "sortBy": "Sort by",
+      "relevance": "Most Relevant",
+      "date": "Date Posted",
+      "salary": "Salary",
+      "company": "Company",
+      "applications": "Application Count",
+      "location": "Location",
+      "ascending": "Ascending",
+      "descending": "Descending"
+    },
+    "filters": {
+      "title": "Advanced Search",
+      "basic": "Basic",
+      "experience": "Experience",
+      "skills": "Skills",
+      "advanced": "Advanced",
+      "keywords": "Keywords",
+      "keywordsPlaceholder": "Job title, keywords, or company",
+      "location": "Location",
+      "locationPlaceholder": "Select location...",
+      "jobType": "Job Type",
+      "workType": "Work Type",
+      "salaryRange": "Salary Range",
+      "experienceLevel": "Experience Level",
+      "industry": "Industry",
+      "postedWithin": "Posted Within",
+      "quickFilters": "Quick Filters",
+      "featuredJobs": "Featured Jobs",
+      "urgentJobs": "Urgent Jobs",
+      "selectedSkills": "Selected Skills",
+      "popularSkills": "Popular Skills",
+      "searchSkills": "Search Skills",
+      "anyTime": "Any time",
+      "today": "Today",
+      "thisWeek": "This week",
+      "thisMonth": "This month",
+      "last3Months": "Last 3 months",
+      "fullTime": "Full-time",
+      "partTime": "Part-time",
+      "contract": "Contract",
+      "internship": "Internship",
+      "freelance": "Freelance",
+      "onsite": "On-site",
+      "hybrid": "Hybrid",
+      "remote": "Remote",
+      "entryLevel": "Entry Level (0-1 years)",
+      "junior": "Junior (2-3 years)",
+      "midLevel": "Mid-level (4-6 years)",
+      "senior": "Senior (7-10 years)",
+      "expert": "Expert (10+ years)"
+    },
+    "recommendations": {
+      "title": "Recommended for You",
+      "subtitle": "Based on your profile and preferences",
+      "matchScore": "match",
+      "matchingSkills": "Matching skills"
+    },
+    "card": {
+      "featured": "Featured",
+      "urgent": "Urgent",
+      "applications": "applications",
+      "salaryNotSpecified": "Salary not specified",
+      "viewDetails": "View Details",
+      "saveJob": "Save Job",
+      "unsaveJob": "Unsave Job"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "title": "Sign In",
+      "subtitle": "Welcome back to Cyprus Jobs",
+      "email": "Email",
+      "password": "Password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "signInButton": "Sign In",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up"
+    },
+    "signUp": {
+      "title": "Sign Up",
+      "subtitle": "Create your account on Cyprus Jobs",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "role": "I am a",
+      "jobSeeker": "Job Seeker",
+      "employer": "Employer",
+      "agreeTerms": "I agree to the",
+      "termsOfService": "Terms of Service",
+      "and": "and",
+      "privacyPolicy": "Privacy Policy",
+      "signUpButton": "Sign Up",
+      "haveAccount": "Already have an account?",
+      "signInLink": "Sign in"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "subtitle": "Enter your email to reset your password",
+      "email": "Email",
+      "sendResetLink": "Send Reset Link",
+      "backToSignIn": "Back to Sign In"
+    }
+  },
+  "dashboard": {
+    "jobSeeker": {
+      "title": "Job Seeker Dashboard",
+      "overview": "Overview",
+      "applications": "Applications",
+      "savedJobs": "Saved Jobs",
+      "profile": "Profile",
+      "alerts": "Job Alerts",
+      "settings": "Settings",
+      "welcome": "Welcome back",
+      "completeProfile": "Complete your profile to get better job recommendations",
+      "profileStrength": "Profile Strength",
+      "activeApplications": "Active Applications",
+      "savedJobsCount": "Saved Jobs",
+      "profileViews": "Profile Views",
+      "recommendedJobs": "Recommended Jobs"
+    },
+    "employer": {
+      "title": "Employer Dashboard",
+      "overview": "Overview",
+      "jobs": "Job Postings",
+      "applications": "Applications",
+      "candidates": "Candidates",
+      "billing": "Billing",
+      "settings": "Settings",
+      "welcome": "Welcome back",
+      "activeJobs": "Active Jobs",
+      "totalApplications": "Total Applications",
+      "newApplications": "New Applications",
+      "shortlistedCandidates": "Shortlisted Candidates",
+      "postNewJob": "Post New Job"
+    }
+  },
+  "gdpr": {
+    "title": "GDPR Settings",
+    "subtitle": "Manage your data and privacy preferences",
+    "dataExport": "Data Export",
+    "dataExportDescription": "Download all your personal data in a structured format",
+    "exportButton": "Export My Data",
+    "accountDeletion": "Account Deletion",
+    "accountDeletionDescription": "Permanently delete your account and all associated data",
+    "deleteButton": "Delete My Account",
+    "consentManagement": "Consent Management",
+    "consentManagementDescription": "Manage your privacy and marketing preferences",
+    "dataRetention": "Data Retention",
+    "dataRetentionDescription": "Control how long we keep your data",
+    "marketingConsent": "Marketing Communications",
+    "marketingConsentDescription": "Receive updates about new features and job opportunities",
+    "jobAlertConsent": "Job Alert Consent",
+    "jobAlertConsentDescription": "Receive notifications about relevant job openings",
+    "analyticsConsent": "Analytics Consent",
+    "analyticsConsentDescription": "Help us improve our service with anonymous usage data",
+    "exportSuccess": "Your data export is being prepared. You will receive an email when it's ready.",
+    "exportError": "Failed to export data. Please try again.",
+    "deleteConfirmation": "Are you sure you want to delete your account? This action cannot be undone.",
+    "deleteSuccess": "Your account has been scheduled for deletion. You will receive a confirmation email.",
+    "deleteError": "Failed to delete account. Please try again."
+  },
+  "billing": {
+    "title": "Billing & Subscriptions",
+    "subtitle": "Manage your payment methods and subscription plans",
+    "currentPlan": "Current Plan",
+    "basicPlan": "Basic Plan",
+    "premiumPlan": "Premium Plan",
+    "noPlan": "No Active Plan",
+    "planFeatures": {
+      "basic": {
+        "title": "Basic Plan - €50/month",
+        "features": [
+          "5 job postings per month",
+          "Basic applicant tracking",
+          "Company profile",
+          "Email support"
+        ]
+      },
+      "premium": {
+        "title": "Premium Plan - €150/month",
+        "features": [
+          "Unlimited job postings",
+          "Advanced applicant tracking",
+          "Featured job listings",
+          "Priority support",
+          "Advanced analytics"
+        ]
+      }
+    },
+    "payPerPost": {
+      "title": "Pay Per Post",
+      "description": "Post individual jobs without a subscription",
+      "priceRange": "€20 - €50 per post",
+      "features": [
+        "Job active for 30 days",
+        "Basic applicant tracking",
+        "Company profile shown"
+      ]
+    },
+    "paymentHistory": "Payment History",
+    "paymentMethod": "Payment Method",
+    "addPaymentMethod": "Add Payment Method",
+    "upgradePlan": "Upgrade Plan",
+    "downgradePlan": "Downgrade Plan",
+    "cancelSubscription": "Cancel Subscription",
+    "reactivateSubscription": "Reactivate Subscription",
+    "invoice": "Invoice",
+    "date": "Date",
+    "amount": "Amount",
+    "status": "Status",
+    "download": "Download",
+    "paid": "Paid",
+    "pending": "Pending",
+    "failed": "Failed"
+  },
+  "errors": {
+    "pageNotFound": "Page Not Found",
+    "pageNotFoundDescription": "The page you are looking for does not exist.",
+    "backToHome": "Back to Home",
+    "serverError": "Server Error",
+    "serverErrorDescription": "Something went wrong on our end. Please try again later.",
+    "tryAgain": "Try Again",
+    "unauthorized": "Unauthorized",
+    "unauthorizedDescription": "You don't have permission to access this resource.",
+    "forbidden": "Forbidden",
+    "forbiddenDescription": "Access to this resource is denied."
+  },
+  "footer": {
+    "about": "About Us",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookies": "Cookie Policy",
+    "gdpr": "GDPR",
+    "help": "Help Center",
+    "blog": "Blog",
+    "careers": "Careers",
+    "partners": "Partners",
+    "allRightsReserved": "All rights reserved.",
+    "copyright": "© 2024 Cyprus Jobs. All rights reserved."
+  }
+}

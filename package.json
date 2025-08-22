@@ -10,7 +10,7 @@
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf .next node_modules/.cache",
-    "test": "vitest"
+    "test": "vitest --config vitest.config.mjs"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",

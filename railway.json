@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "services": {
+    "minijobz": {
+      "source": {
+        "repo": "pr0br0/minijobz-cyprus"
+      },
+      "build": {
+        "commands": [
+          "npm ci",
+          "npm run build"
+        ]
+      },
+      "start": {
+        "command": "npm start"
+      },
+      "variables": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}
